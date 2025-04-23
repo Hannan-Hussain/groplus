@@ -96,7 +96,11 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                       controller: emailController,
                     ),
                     const SizedBox(height: 250),
-                    
+                    PrimaryButton(
+                      title: "Send Mail",
+                      icon: Icons.mail,
+                      ontap: sendLinkForResetPassword,
+                    ),
                   ],
                 ),
               ),
