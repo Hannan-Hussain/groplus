@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "990613648728",
+    "project_id": "groplus-84c87",
+    "storage_bucket": "groplus-84c87.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:990613648728:android:b146e9b1feb3510146e12d",
+        "android_client_info": {
+          "package_name": "com.example.groplus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBSCWVnS6HdToyrUij7mWZ9gHjXLGf5GEM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
