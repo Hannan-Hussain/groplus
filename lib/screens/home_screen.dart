@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:groplus/Models/grocery_model.dart';
 import 'package:groplus/contatrains/grcery.items.dart';
+import 'package:groplus/screens/product_details.dart';
 import 'package:groplus/screens/upload_item.dart';
 import 'package:groplus/widgets/Location_widget.dart';
 import 'package:groplus/widgets/card_widget.dart';
@@ -95,7 +96,16 @@ final TextEditingController searchController=TextEditingController();
                     imageUrl: itemslist[index].imageUrl,
                     Title: itemslist[index].name,
                     rating: "0",
+                        ontap: () {
+                                     Navigator.push(
+                                         context,
+                                         MaterialPageRoute(
+                                             builder: (c) => ProductDetailScreen(
+                                                   items: itemslist[index],
+                                                 )));
+                                   }, title: '',
                     );
+                    
                 
                 
 

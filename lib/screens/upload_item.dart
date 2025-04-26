@@ -110,21 +110,43 @@ class _UploadItemState extends State<UploadItem> {
                     CustomTextField(
                         hintText: "Enter Product Name",
                         controller: nameController),
+
+
+
+                        
                     const SizedBox(
                       height: 12,
                     ),
+
+
                     CustomTextField(
                       hintText: "Enter Product description",
                       controller: diController,
                       maxLines: 4,
                     ),
+
+
+
+
                     const SizedBox(
                       height: 12,
                     ),
+
+
+
+
                     CustomTextField(
                         hintText: "Enter Product price",
                         controller: priceController),
+
+
+
+
+
+
                     const SizedBox(height: 50),
+
+
                     PrimaryButton(
                         title: "Upload",
                         ontap: () {
