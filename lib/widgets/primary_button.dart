@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-
+// import 'package:google_fonts/google_fonts.dart';
 
 class PrimaryButton extends StatelessWidget {
   final String title;
-  final IconData icon;
+  final IconData? icon;
   final Function() ontap;
   const PrimaryButton(
-      {super.key,
-      required this.title,
-      required this.icon,
-      required this.ontap});
+      {super.key, required this.title, this.icon, required this.ontap});
 
   @override
   Widget build(BuildContext context) {
