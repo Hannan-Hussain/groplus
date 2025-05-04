@@ -31,4 +31,6 @@ class UserModel {
         userName: map["userName"],
         profileUrl:map["profilepic"]??"");
   }
+
+  get profilePic => null;
 }
