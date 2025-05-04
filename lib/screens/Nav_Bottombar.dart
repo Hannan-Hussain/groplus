@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:groplus/Models/grocery_model.dart';
 import 'package:groplus/screens/card_screen.dart';
 import 'home_screen.dart';
-import ' card_screen.dart';
+// import ' card_screen.dart';
 import 'favorite_screen.dart';
 import 'profile_screen.dart';
 
@@ -18,7 +19,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   final List<Widget> screens = [
     const HomeScreen(),
     const CartScreen (),
-    const FavoriteScreen(),
+   const FavoriteScreen(),
+
     const ProfileScreen(),
   ];
 

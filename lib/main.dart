@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:groplus/screens/Nav_Bottombar.dart';
 import 'package:groplus/screens/signup_screen%20(1).dart';
 import 'package:groplus/screens/splash_screen.dart';
+import 'package:groplus/screens/update_pass.dart';
 
 Future<void> main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SplashScreen(),
+      home: UpdatePass(),
     );
   }
 }

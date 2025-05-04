@@ -2,36 +2,37 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
-  final Icon? prefixIcon;
-  final int maxLines;
-  final Icon? suffixIcon;
-  final Function()? ontap;
   final TextEditingController controller;
+  final bool obscureText;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final int maxLines;
+
   const CustomTextField({
-    super.key,
+    Key? key,
     required this.hintText,
-    this.maxLines = 1,
-    this.prefixIcon,
     required this.controller,
+    this.obscureText = false,
     this.suffixIcon,
-    this.ontap,
-  });
+    this.prefixIcon,
+    this.maxLines = 1, 
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      maxLines: maxLines,
       controller: controller,
+      obscureText: obscureText,
+      maxLines: maxLines, 
       decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: hintText,
-          prefixIcon: prefixIcon,
-          fillColor: Color(0xffF0F1F2),
-          filled: true,
-          suffixIcon: suffixIcon,
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(8),
-              borderSide: BorderSide(color: Colors.transparent))),
+        hintText: hintText,
+        suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      ),
     );
   }
 }
