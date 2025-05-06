@@ -1,118 +1,86 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+// import 'package:grocery_plus/widgets/custom_text_field.dart';
+// import 'package:grocery_plus/widgets/primary_button.dart';
 import 'package:groplus/widgets/custom_text_field.dart';
 import 'package:groplus/widgets/primary_button.dart';
 
-class UpdatePass extends StatefulWidget {
-  const UpdatePass({super.key});
+class ChangePasswordSceen extends StatefulWidget {
+  const ChangePasswordSceen({super.key});
 
   @override
-  State<UpdatePass> createState() => _UpdatePassState();
+  State<ChangePasswordSceen> createState() => _ChangePasswordSceenState();
 }
 
-class _UpdatePassState extends State<UpdatePass> {
-  final oldPasswordController = TextEditingController();
-  final newPasswordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-
-  bool isOldObscured = true;
-  bool isNewObscured = true;
-  bool isConfirmObscured = true;
+class _ChangePasswordSceenState extends State<ChangePasswordSceen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController newPasswordController = TextEditingController();
+  var auth = FirebaseAuth.instance;
+  bool isLoading = false;
+  Future<void> changePassword() async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      User? user = auth.currentUser;
+      if (user == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("User not found")),
+        );
+        return;
+      }
+      var credential = await EmailAuthProvider.credential(
+          email: emailController.text, password: passwordController.text);
+      await user.reauthenticateWithCredential(credential);
+      await user.updatePassword(newPasswordController.text);
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Password updated successfully")),
+      );
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      debugPrint("this is the error$e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  "Update your Password",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  "Reset your password",
-                  style: TextStyle(fontSize: 16, color: Colors.green),
-                ),
-                const SizedBox(height: 24),
-
-               Text("Old password"),
-               SizedBox(height: 5,),
-                CustomTextField(
-                  hintText: "Old Password",
-                  controller: oldPasswordController,
-                  obscureText: isOldObscured,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      isOldObscured ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isOldObscured = !isOldObscured;
-                      });
-                    },
+            child: isLoading
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : Column(
+                    children: [
+                      CustomTextField(
+                          hintText: "Enter Your Email",
+                          controller: emailController),
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                          hintText: "Enter Your old Password",
+                          controller: passwordController),
+                      const SizedBox(height: 20),
+                      CustomTextField(
+                        hintText: "Enter your new password",
+                        controller: newPasswordController,
+                      ),
+                      const SizedBox(height: 300),
+                      PrimaryButton(
+                          title: "Update",
+                          ontap: () {
+                            changePassword();
+                          })
+                    ],
                   ),
-
-
-                ),
-
-
-
-                
-                const SizedBox(height: 16),
-
-               Text("New password"),
-               SizedBox(height: 5,),
-                CustomTextField(
-                  hintText: "New Password",
-                  controller: newPasswordController,
-                  obscureText: isNewObscured,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      isNewObscured ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isNewObscured = !isNewObscured;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(height: 16),
-
-                Text("confirm password"),
-                SizedBox(height: 5,),
-                CustomTextField(
-                  hintText: "Confirm Password",
-                  controller: confirmPasswordController,
-                  obscureText: isConfirmObscured,
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      isConfirmObscured ? Icons.visibility_off : Icons.visibility,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        isConfirmObscured = !isConfirmObscured;
-                      });
-                    },
-                  ),
-                ),
-                const SizedBox(height:50),
-
-               PrimaryButton(
-                title: "Update password",
-                ontap: () {
-                  
-                },
-               )
-              ],
-            ),
           ),
         ),
       ),
