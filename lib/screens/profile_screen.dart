@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:groplus/Models/user_model.dart';
 import 'package:groplus/screens/edit_screen.dart';
 import 'package:groplus/screens/login_screen.dart';
+import 'package:groplus/screens/update_pass.dart';
 import 'package:groplus/widgets/profile_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -85,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (c) => EditProfileScreen(
+                          builder: (c) => ChangePasswordSceen(
                                 currentUser: currentUser!,
                               )));
                 }),

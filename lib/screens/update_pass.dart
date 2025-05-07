@@ -1,12 +1,13 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:groplus/Models/user_model.dart';
 // import 'package:grocery_plus/widgets/custom_text_field.dart';
 // import 'package:grocery_plus/widgets/primary_button.dart';
 import 'package:groplus/widgets/custom_text_field.dart';
 import 'package:groplus/widgets/primary_button.dart';
 
 class ChangePasswordSceen extends StatefulWidget {
-  const ChangePasswordSceen({super.key});
+  const ChangePasswordSceen({super.key, required UserModel currentUser});
 
   @override
   State<ChangePasswordSceen> createState() => _ChangePasswordSceenState();

@@ -6,11 +6,11 @@ class UserModel {
   final String uid;
 
   UserModel({
-    required this.email,
-    required this.phoneNumber,
-    required this.uid,
-    this.profileUrl,
     required this.userName,
+    required this.phoneNumber,
+    required this.email,
+    required this.profileUrl,
+    required this.uid,
   });
 
   Map<String, dynamic> toMap() {
@@ -29,7 +29,7 @@ class UserModel {
         phoneNumber: map["phoneNumber"] ?? "",
         uid: map["uid"]??"",
         userName: map["userName"],
-        profileUrl:map["profilepic"]??"");
+        profileUrl:map["profilepic"]??"", );
   }
 
   get profilePic => null;
