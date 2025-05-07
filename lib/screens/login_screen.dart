@@ -1,6 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:groplus/contatrains/colors.dart';
+import 'package:groplus/controllers/Auth_controller.dart';
 import 'package:groplus/screens/Nav_Bottombar.dart';
 import 'package:groplus/screens/forget_password_screen.dart';
 import 'package:groplus/screens/signup_screen%20(1).dart';
@@ -17,46 +20,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-   bool isLoading = false;
-
-  Future<void>loginUser (String email, String password) async {
-    setState(() {
-      isLoading = true;
-    });
-    if (email.isEmpty || password.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Please fill all fields")),
-      );
-      return;
-    }
-
-    try {
-      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-if(userCredential.user!.emailVerified==false||_auth.currentUser?.uid==null){
-ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
-
-  "User not vertified or User not Exsist"
-)));} else{
-  Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (c) => BottomNavBar()),
-        (route) => false,
-      );
-}
-      
-    } on FirebaseAuthException catch (e) {
-      debugPrint(e.code);
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
+  AuthController authController = Get.put(AuthController());
 
   @override
   void dispose() {
@@ -139,7 +103,7 @@ ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
   title: "Next",
   icon: Icons.arrow_forward,
   ontap: () {
-    loginUser(
+   authController. loginUser(
       emailController.text.trim(),
       passwordController.text.trim(),
     );

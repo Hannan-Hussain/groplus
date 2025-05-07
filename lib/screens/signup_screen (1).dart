@@ -1,14 +1,8 @@
-// import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:groplus/Models/user_model.dart';
-// import 'package:google_fonts/google_fonts.dart';
-// import 'package:grocery_plus/constants/colors.dart';
-// import 'package:grocery_plus/screens/login_screen.dart';
-// import 'package:grocery_plus/widgets/custom_text_field.dart';
-// import 'package:grocery_plus/widgets/primary_button.dart';
+import 'package:get/get.dart';
 import 'package:groplus/contatrains/colors.dart';
+import 'package:groplus/controllers/Auth_controller.dart';
 import 'package:groplus/screens/login_screen.dart';
 import 'package:groplus/widgets/custom_text_field.dart';
 import 'package:groplus/widgets/primary_button.dart';
@@ -26,42 +20,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passswordController = TextEditingController();
   
-  var auth = FirebaseAuth.instance;
-  var firestore = FirebaseFirestore.instance;
-  bool isLoading = false;
-  Future<void> registerUser(String email, String password) async {
-    setState(() {
-      isLoading = true;
-    });
-    try {
-      UserCredential userCredential = await auth.createUserWithEmailAndPassword(
-          email: email, password: password);
-      if (userCredential.user != null) {
-        userCredential.user!.sendEmailVerification();
-        UserModel userData= UserModel(
-          uid: auth.currentUser!.uid,
-            userName: nameController.text,
-            email: email,
-            phoneNumber: phoneController.text);
-            await firestore.collection("users").doc(auth.currentUser!.uid).set(userData.toMap());
-            
-            
-
-        
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text("Verification email sent to $email")));
-        Navigator.push(
-            context, MaterialPageRoute(builder: (c) => LoginScreen()));
-      }
-    } on FirebaseAuthException catch (e) {
-      debugPrint(e.code);
-    } finally {
-      setState(() {
-        isLoading = false;
-      });
-    }
-  }
-
+  
+  AuthController authController = Get.put(AuthController());
   @override
   void dispose() {
     nameController.dispose();
@@ -77,9 +37,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       body: SafeArea(
           child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: isLoading == true
-            ? Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
+        child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -152,11 +110,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ontap: () {
                           if (passswordController.text.isNotEmpty &&
                               emailController.text.isNotEmpty) {
-                            registerUser(
-                                emailController.text, passswordController.text);
+                            authController.registerUser(
+                               
+                                emailController.text, passswordController.text,phoneController.text, nameController.text );
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text("Please fill all the fields")));
+                            // ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            //     content: Text("Please fill all the fields")));
+                            Get.snackbar("Error", "Please fill all the fields",
+                          snackPosition: SnackPosition.TOP);
                           }
                         }),
                     const SizedBox(
