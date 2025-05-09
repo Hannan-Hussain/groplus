@@ -1,10 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:groplus/contatrains/colors.dart';
 import 'package:groplus/controllers/Auth_controller.dart';
-import 'package:groplus/screens/Nav_Bottombar.dart';
 import 'package:groplus/screens/forget_password_screen.dart';
 import 'package:groplus/screens/signup_screen%20(1).dart';
 import 'package:groplus/widgets/custom_text_field.dart';
@@ -92,7 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (c) => ForgetPasswordScreen()),
+                            MaterialPageRoute(
+                                builder: (c) => ForgetPasswordScreen()),
                           );
                         },
                         child: const Text("Forget Password?"),
@@ -100,16 +98,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     const SizedBox(height: 50),
                     PrimaryButton(
-  title: "Next",
-  icon: Icons.arrow_forward,
-  ontap: () {
-   authController. loginUser(
-      emailController.text.trim(),
-      passwordController.text.trim(),
-    );
-  },
-),
-
+                      title: "Next",
+                      icon: Icons.arrow_forward,
+                      ontap: () {
+                        if (emailController.text.isNotEmpty &&
+                            passwordController.text.isNotEmpty) {
+                          authController.loginUser(
+                            emailController.text.trim(),
+                            passwordController.text.trim(),
+                          );
+                        } else {
+                          Get.snackbar("Error", "Please fill all fields");
+                        }
+                      },
+                    ),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
